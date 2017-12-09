@@ -12,7 +12,7 @@ class Patient(models.Model):
     birthdate = models.DateField(max_length=3, verbose_name='Data de nascimento')
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, verbose_name='Sexo')
     phone = models.CharField(max_length=20, verbose_name='Telefone')
-    email = models.EmailField(verbose_name='E-mail")
+    email = models.EmailField(verbose_name='E-mail')
 
     def __str__(self):
         return self.name
@@ -38,11 +38,11 @@ class Appointment(models.Model):
     patient = models.ForeignKey("Patient", related_name="patient")
     procedure = models.ForeignKey("Procedure", related_name="procedure")
     date = models.DateField()
-    start_at = models.DateTimeField(null=False)
-    end_at = models.DateTimeField()
+    start_at = models.TimeField(null=False)
+    end_at = models.TimeField()
 
     def __str__(self):
-        return "{} - {}, às {}".format(self.patient.name, self.procedure.description, self.start_at)
+        return "{} - {}, dia {} às {} horas".format(self.patient.name, self.procedure.description, self.date, self.start_at)
     
     class Meta:
         verbose_name = 'Agendamento'
