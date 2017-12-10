@@ -109,9 +109,9 @@ class ProcedureTestCase(APITransactionTestCase):
         )
 
 
-    def test_procedure_list(self):
+    def test_procedures_list(self):
 
-        response = self.client.get("/procedure/")
+        response = self.client.get("/procedures/")
 
         self.assertEqual(response.json(),
             [
@@ -132,7 +132,7 @@ class ProcedureTestCase(APITransactionTestCase):
 
 
     def test_procedure_detail(self):
-        response = self.client.get("/procedure/1/")
+        response = self.client.get("/procedures/1/")
         
         self.assertDictEqual(response.json(),
             {
@@ -152,7 +152,7 @@ class ProcedureTestCase(APITransactionTestCase):
             "cost": "500.00"
         }
 
-        response = self.client.post("/procedure/", payload)
+        response = self.client.post("/procedures/", payload)
 
         self.assertDictEqual(response.json(),
             {
@@ -167,6 +167,82 @@ class ProcedureTestCase(APITransactionTestCase):
 
     def test_procedure_delete(self):
         
-        response = self.client.delete("/procedure/1/")
+        response = self.client.delete("/procedures/1/")
 
         self.assertEqual(response.status_code, 204)
+
+
+class AppointmentTestCase(APITransactionTestCase):
+
+    def setUp(self):
+
+        patient_one = Patient.objects.create(
+            name="Vinicius Chan",
+            birthdate="1995-12-09",
+            sex="M",
+            phone="16998882809",
+            email="test2@email.com"
+        )
+
+        patient_two = Patient.objects.create(
+            name="Jane Doe",
+            birthdate="1995-12-07",
+            sex="F",
+            phone="169988782809",
+            email="test3@email.com"
+        )
+
+        procedure_one = Procedure.objects.create(
+            description="Exame 3",
+            cost="100.00"
+        )
+
+        procedure_two = Procedure.objects.create(
+            description="Exame 4",
+            cost="200.00"
+        )
+
+        Appointment.objects.create(
+            id=1,
+            patient=patient_one,
+            procedure=procedure_one,
+            date="2020-10-10",
+            start_at="15:00",
+            end_at="18:00"
+        )
+    
+        Appointment.objects.create(
+            id=2,
+            patient=patient_two,
+            procedure=procedure_two,
+            date="2021-10-10",
+            start_at="10:00",
+            end_at="12:00"
+        )
+
+    def test_appointments_list(self):
+
+        response = self.client.get("/appointments/")
+
+        self.assertEqual(response.json(),
+            [
+                {
+                    "id": 1,
+                    "patient": "http://testserver/patients/1/",
+                    "procedure": "http://testserver/procedures/1/",
+                    "date": "2020-10-10",
+                    "start_at": "15:00:00",
+                    "end_at": "18:00:00"
+                },
+                {
+                    "id": 2,
+                    "patient": "http://testserver/patients/2/",
+                    "procedure": "http://testserver/procedures/2/",
+                    "date": "2021-10-10",
+                    "start_at": "10:00:00",
+                    "end_at": "12:00:00"
+                }
+            ]
+        )
+
+        self.assertEqual(response.status_code, 200)
