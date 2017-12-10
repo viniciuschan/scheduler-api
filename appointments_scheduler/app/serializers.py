@@ -18,7 +18,6 @@ class ProcedureSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Procedure
         fields = ("id", "description", "cost")
-        read_only_fields = ("id")
 
 
 class AppointmentSerializer(serializers.HyperlinkedModelSerializer):
