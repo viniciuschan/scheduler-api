@@ -8,7 +8,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'appointments', views.AppointmentViewSet)
 router.register(r'patients', views.PatientViewSet)
-router.register(r'procedure', views.ProcedureViewSet)
+router.register(r'procedures', views.ProcedureViewSet)
 
 urlpatterns = [
     url(r'', include(router.urls)),
