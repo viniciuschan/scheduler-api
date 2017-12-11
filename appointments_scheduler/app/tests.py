@@ -66,7 +66,6 @@ class PatientTestCase(APITransactionTestCase):
     def test_patient_create(self):
         
         payload = {
-            "id": 1,
             "name": "Test User",
             "birthdate": "1995-12-09",
             "sex": "F",
@@ -163,13 +162,16 @@ class ProcedureTestCase(APITransactionTestCase):
     def test_procedure_create(self):
 
         payload = {
-            "id": 3,
             "description": "coleta exame",
             "cost": "100.00"
         }
         response = self.client.post("/procedures/", payload)
 
-
+        self.assertDictEqual(response.json(), {
+            "id": 13,
+            "description": "coleta exame",
+            "cost": "100.00"
+        })
         self.assertEqual(response.status_code, 201)
 
     def test_procedure_partial_update(self):
