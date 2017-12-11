@@ -330,11 +330,32 @@ class AppointmentTestCase(APITransactionTestCase):
         response = self.client.put("/appointments/1/", payload)
         self.assertEqual(response.status_code, 200)
 
+    def test_appointment_create(self):
+        
+        payload = {
+                "patient": "http://testserver/patients/2/",
+                "procedure": "http://testserver/procedures/2/",
+                "date": "2021-10-10",
+                "start_at": "10:00:00",
+                "end_at": "12:00:00"
+        }
+
+        response = self.client.post("/appointments/", payload)
+        
+        self.assertDictEqual(response.json(),
+            {
+                "id": 3,
+                "patient": "http://testserver/patients/2/",
+                "procedure": "http://testserver/procedures/2/",
+                "start_at": "10:00:00",
+                "end_at": "12:00:00" 
+            }
+        )
+
+        self.assertEqual(response.status_code, 201)
+
 
     def test_appointment_delete(self):
         
         response = self.client.delete("/appointments/2/")
         self.assertEqual(response.status_code, 204)
-
-
-
