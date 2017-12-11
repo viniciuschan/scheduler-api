@@ -54,3 +54,5 @@ Delete:
 ```
 http://localhost:8000/appointments/{id}/
 ```
+
+## All the unit tests of the endpoints can be performed from the postman collection
