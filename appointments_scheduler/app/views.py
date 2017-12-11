@@ -6,19 +6,16 @@ from .serializers import AppointmentSerializer, PatientSerializer, ProcedureSeri
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-
 class AppointmentViewSet(viewsets.ModelViewSet):
     """ API endpoint that allows appointments to be viewed or edited. """
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
-
 
 class PatientViewSet(viewsets.ModelViewSet):
     """ API endpoint that allows patients to be viewed or edited. """
 
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
-
 
 class ProcedureViewSet(viewsets.ModelViewSet):
     """ API endpoint that allows procedures to be viewed or edited. """
