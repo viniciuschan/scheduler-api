@@ -3,11 +3,11 @@ from .models import Appointment, Patient, Procedure
 
 
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ['patient', 'procedure', 'date', 'start_at', 'end_at']
+    list_display = ['id', 'patient', 'procedure', 'date', 'start_at', 'end_at']
 
 
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ['name', 'sex', 'birthdate', 'phone', 'email']
+    list_display = ['id', 'name', 'sex', 'birthdate', 'phone', 'email']
 
 
 class ProcedureAdmin(admin.ModelAdmin):
