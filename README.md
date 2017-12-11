@@ -13,7 +13,7 @@ Author: Vinícius Chan
 
 ### Getting Started
 
-Access virtualenv:
+Activate virtualenv:
 
 ```
 $ source <path>/bin/activate
