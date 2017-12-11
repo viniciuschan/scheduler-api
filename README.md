@@ -3,34 +3,44 @@
 Author: Vinícius Chan
 
 
-## Prerequisites
+## Requirements
 
 * [Python3](https://www.python.org/download/releases/3.0/)
 * [Virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
 * [Django 1.11](https://docs.djangoproject.com/en/2.0/releases/1.11/)
-* [Django Rest Framework](http://www.django-rest-framework.org)
+* [Django Rest Framework 3](http://www.django-rest-framework.org)
 
 
 ### Getting Started
 
-Install all dependencies:
+Access virtualenv:
 
 ```
-pip install -r requirements.txt
+$ source <path>/bin/activate
+```
+
+Install all dependencies on virtualenv:
+
+```
+$ pip install -r requirements.txt
 ```
 
 Migrate:
 
 ```
-python manage.py migrate
+$ python manage.py migrate
 ```
 
 Run server:
 
 ```
-python manage.py runserver
+$ python manage.py runserver
 ````
 
+Run tests:
+```
+$ python manage.py test -v2
+```
 
 ### Resources
 
@@ -55,4 +65,4 @@ Delete:
 http://localhost:8000/appointments/{id}/
 ```
 
-## All the unit tests of the endpoints can be performed from the postman collection
+## All the unit tests of the endpoints can be performed from my POSTMAN collection. Please, check it. =)
