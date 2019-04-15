@@ -9,37 +9,27 @@ Author: Vinícius Chan
 * [Virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
 * [Django 1.11](https://docs.djangoproject.com/en/2.0/releases/1.11/)
 * [Django Rest Framework 3](http://www.django-rest-framework.org)
+* [Docker](https://www.docker.com/)
+* [Docker-Compose](https://docs.docker.com/compose/)
 
 
 ### Getting Started
 
-Activate virtualenv:
+Run server:
 
 ```
-$ source <path>/bin/activate
-```
-
-Install all dependencies on virtualenv:
-
-```
-$ pip install -r requirements.txt
-```
+$ make up
+````
 
 Migrate:
 
 ```
-$ python manage.py migrate
+$ make migrate
 ```
-
-Run server:
-
-```
-$ python manage.py runserver
-````
 
 Run tests:
 ```
-$ python manage.py test -v2
+$ make test
 ```
 
 ### Resources
