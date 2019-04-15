@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  scheduler-api:
+    build: .
+    command: su -c "python /appointments_scheduler/manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports: 
+       - "8000:8000"
+    depends_on:
+       - db
+    links:
+      - db
+
+  db:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+      - MYSQL_USER=root
+      - MYSQL_DATABASE=api
+    volumes:
+      - database:/var/lib/mysql
+
+volumes:
+  database:
