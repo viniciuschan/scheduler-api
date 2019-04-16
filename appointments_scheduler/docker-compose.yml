@@ -1,16 +1,17 @@
-version: '2'
+version: '3'
 
 services:
   scheduler-api:
     build: .
-    command: su -c "python /appointments_scheduler/manage.py runserver 0.0.0.0:8000"
-    restart: always
-    ports: 
+    command: su -c "python manage.py runserver 0.0.0.0:8000"
+    ports:
        - "8000:8000"
     depends_on:
        - db
     links:
       - db
+    volumes:
+      - .:/appointments_scheduler
 
   db:
     image: mysql:5.6
