@@ -205,11 +205,11 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
             email='test3@gmail.com'
         )
         self.procedure_one = ProcedureFactory.create(
-            description='Exame 1',
+            description='Exam 1',
             cost='100.00'
         )
         self.procedure_two = ProcedureFactory.create(
-            description='Exame 4',
+            description='Exam 4',
             cost='200.00'
         )
         self.appointment_one = AppointmentFactory.create(
