@@ -2,22 +2,22 @@ from .models import Appointment, Patient, Procedure
 
 from rest_framework import serializers
 
-class PatientSerializer(serializers.HyperlinkedModelSerializer):
+class PatientSerializer(serializers.ModelSerializer):
     """ Patient model serializer """
-    
+
     class Meta:
         model = Patient
         fields = ("id", "name", "birthdate", "sex", "phone", "email")
         read_only_fields = ("id",)
 
-class ProcedureSerializer(serializers.HyperlinkedModelSerializer):
+class ProcedureSerializer(serializers.ModelSerializer):
     """ Procedure model serializer """
 
     class Meta:
         model = Procedure
         fields = ("id", "description", "cost")
 
-class AppointmentSerializer(serializers.HyperlinkedModelSerializer):
+class AppointmentSerializer(serializers.ModelSerializer):
     """ Appointment model serializer """
 
     patient = PatientSerializer
