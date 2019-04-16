@@ -3,6 +3,8 @@ build:
 
 up:
 	docker-compose up
+
+restart:
 	docker-compose restart scheduler-api
 
 migrate:
