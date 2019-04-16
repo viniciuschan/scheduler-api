@@ -4,7 +4,7 @@ from django.db import models
 
 class Patient(models.Model):
     """ Representative class for patients. """
-    
+
     MALE, FEMALE = 'm', 'f'
 
     SEX_CHOICES = (
@@ -20,7 +20,7 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Paciente'
 
@@ -47,6 +47,6 @@ class Appointment(models.Model):
 
     def __str__(self):
         return "{} - {}, dia {} às {} horas".format(self.patient.name, self.procedure.description, self.date, self.start_at)
-    
+
     class Meta:
         verbose_name = 'Agendamento'

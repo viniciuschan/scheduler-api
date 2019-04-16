@@ -1,3 +1,4 @@
+from decimal import Decimal
 from datetime import date, time, timedelta
 
 from factory import SubFactory
@@ -26,7 +27,7 @@ class ProcedureFactory(DjangoModelFactory):
         model = Procedure
 
     description = 'Procedure Test'
-    cost = '100.00'
+    cost = Decimal(100)
 
 
 class AppointmentFactory(DjangoModelFactory):

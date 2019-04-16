@@ -1,5 +1,7 @@
 from datetime import date
+from decimal import Decimal
 
+from rest_framework import serializers
 from rest_framework.test import APITransactionTestCase
 
 from .factories import PatientFactory, ProcedureFactory, AppointmentFactory
@@ -25,7 +27,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
             email='test2@email.com'
         )
 
-    def test_patient_create(self):
+    def test_create_patient(self):
         url = '/patients/'
         payload = {
             'name': 'Patient Test',
@@ -38,7 +40,35 @@ class PatientViewSetTestCase(APITransactionTestCase):
 
         self.assertEqual(response.status_code, 201)
 
-    def test_patient_list(self):
+    def test_create_patient_with_invalid_name(self):
+        url = '/patients/'
+        payload = {
+            'name': 'A',
+            'birthdate': date.today(),
+            'sex': Patient.FEMALE,
+            'phone': '16998882809',
+            'email': 'test@email.com'
+        }
+        response = self.client.post(url, payload)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertRaises(serializers.ValidationError)
+
+    def test_create_patient_with_invalid_phone(self):
+        url = '/patients/'
+        payload = {
+            'name': 'Patient Invalid Phone',
+            'birthdate': date.today(),
+            'sex': Patient.FEMALE,
+            'phone': '12345678',
+            'email': 'test@email.com'
+        }
+        response = self.client.post(url, payload)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertRaises(serializers.ValidationError)
+
+    def test_list_patient(self):
         response = self.client.get('/patients/')
 
         self.assertEqual(response.json().get('results'), [
@@ -62,7 +92,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         self.assertEqual(Patient.objects.count(), 2)
         self.assertEqual(response.status_code, 200)
 
-    def test_patient_detail(self):
+    def test_detail_patient(self):
         patient = PatientFactory.create(
             name='Patient Three',
             birthdate='1990-10-15',
@@ -83,7 +113,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         })
         self.assertEqual(response.status_code, 200)
 
-    def test_patient_update(self):
+    def test_update_patient(self):
         patient = PatientFactory.create()
         url_update = '/patients/{}/'.format(patient.id)
 
@@ -97,7 +127,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         response = self.client.put(url_update, payload)
         self.assertEqual(response.status_code, 200)
 
-    def test_patient_partial_update(self):
+    def test_partial_update_patient(self):
         patient = PatientFactory.create()
         url_partial_update = '/patients/{}/'.format(patient.id)
 
@@ -111,7 +141,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         response = self.client.patch(url_partial_update, payload)
         self.assertEqual(response.status_code, 200)
 
-    def test_patient_delete(self):
+    def test_delete_patient(self):
         response = self.client.delete('/patients/1/')
         self.assertEqual(response.status_code, 204)
 
@@ -121,14 +151,14 @@ class ProcedureViewSetTestCase(APITransactionTestCase):
     def setUp(self):
         self.procedure_one = ProcedureFactory.create(
             description='Exam',
-            cost='100.00'
+            cost=Decimal(100)
         )
         self.procedure_two = ProcedureFactory.create(
             description='Surgery',
-            cost='500.00'
+            cost=Decimal(500)
         )
 
-    def test_procedures_list(self):
+    def test_list_procedures(self):
         response = self.client.get('/procedures/')
 
         self.assertEqual(response.json().get('results'), [
@@ -146,7 +176,7 @@ class ProcedureViewSetTestCase(APITransactionTestCase):
         self.assertEqual(Procedure.objects.count(), 2)
         self.assertEqual(response.status_code, 200)
 
-    def test_procedure_detail(self):
+    def test_detail_procedure(self):
         url_detail = '/procedures/{}/'.format(self.procedure_one.id)
         response = self.client.get('/procedures/1/')
 
@@ -157,32 +187,42 @@ class ProcedureViewSetTestCase(APITransactionTestCase):
         })
         self.assertEqual(response.status_code, 200)
 
-    def test_procedure_create(self):
+    def test_create_procedure(self):
         payload = {
             'description': 'Extraction',
-            'cost': '200.00'
+            'cost': Decimal(200)
         }
         response = self.client.post('/procedures/', payload, format='json')
 
         self.assertEqual(response.status_code, 201)
 
-    def test_procedure_partial_update(self):
+    def test_create_procedure_with_negative_price(self):
+        payload = {
+            'description': 'Exam with negative price',
+            'cost': Decimal(-100)
+        }
+        response = self.client.post('/procedures/', payload, format='json')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertRaises(serializers.ValidationError)
+
+    def test_partial_update_procedure(self):
         payload = {
             'description': 'Full Exam',
-            'cost': '500.00'
+            'cost': Decimal(500)
         }
         response = self.client.patch('/procedures/2/', payload)
         self.assertEqual(response.status_code, 200)
 
-    def test_procedure_update(self):
+    def test_update_procedure(self):
         payload = {
             'description': 'Advanced Exam',
-            'cost': '1200.00'
+            'cost': Decimal(1200)
         }
         response = self.client.put('/procedures/2/', payload)
         self.assertEqual(response.status_code, 200)
 
-    def test_procedure_delete(self):
+    def test_delete_procedure(self):
 
         response = self.client.delete('/procedures/1/')
         self.assertEqual(response.status_code, 204)
@@ -206,11 +246,11 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
         )
         self.procedure_one = ProcedureFactory.create(
             description='Exam 1',
-            cost='100.00'
+            cost=Decimal(100)
         )
         self.procedure_two = ProcedureFactory.create(
             description='Exam 4',
-            cost='200.00'
+            cost=Decimal(200)
         )
         self.appointment_one = AppointmentFactory.create(
             patient=self.patient_one,
@@ -227,7 +267,7 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
             end_at='12:00:00'
         )
 
-    def test_appointment_list(self):
+    def test_list_appointment(self):
         response = self.client.get('/appointments/')
 
         self.assertEqual(response.json().get('results'), [
@@ -251,7 +291,7 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
         self.assertEqual(Appointment.objects.count(), 2)
         self.assertEqual(response.status_code, 200)
 
-    def test_appointment_detail(self):
+    def test_detail_appointment(self):
         url_detail = '/appointments/{}/'.format(self.appointment_one.id)
         response = self.client.get(url_detail)
 
@@ -265,14 +305,14 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
         })
         self.assertEqual(response.status_code, 200)
 
-    def test_appointment_partial_update(self):
+    def test_partial_update_appointment(self):
         payload = {
             'start_at': '11:00:00'
         }
         response = self.client.patch('/appointments/1/', payload)
         self.assertEqual(response.status_code, 200)
 
-    def test_appointment_update(self):
+    def test_update_appointment(self):
         appointment = AppointmentFactory.create()
         url_update = '/appointments/{}/'.format(appointment.id)
 
@@ -286,7 +326,7 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
         response = self.client.put(url_update, payload)
         self.assertEqual(response.status_code, 200)
 
-    def test_appointment_create(self):
+    def test_create_appointment(self):
         payload = {
             'patient': self.patient_one.id,
             'procedure': self.patient_two.id,
@@ -297,6 +337,18 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
         response = self.client.post('/appointments/', payload, format='json')
         self.assertEqual(response.status_code, 201)
 
-    def test_appointment_delete(self):
+    def test_create_appointment_in_the_past(self):
+        payload = {
+            'patient': self.patient_one.id,
+            'procedure': self.patient_two.id,
+            'date': '2018-10-10',
+            'start_at': '10:00:00',
+            'end_at': '12:00:00'
+        }
+        response = self.client.post('/appointments/', payload, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertRaises(serializers.ValidationError)
+
+    def test_delete_appointment(self):
         response = self.client.delete('/appointments/2/')
         self.assertEqual(response.status_code, 204)
