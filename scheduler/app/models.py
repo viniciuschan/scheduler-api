@@ -5,7 +5,7 @@ from django.db import models
 class Patient(models.Model):
     """ Representative class for patients. """
     
-    MALE, FEMALE = 'Male', 'Female'
+    MALE, FEMALE = 'male', 'female'
 
     SEX_CHOICES = (
         (MALE, 'male'),
