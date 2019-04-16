@@ -5,11 +5,11 @@ from django.db import models
 class Patient(models.Model):
     """ Representative class for patients. """
     
-    MALE, FEMALE = 'male', 'female'
+    MALE, FEMALE = 'm', 'f'
 
     SEX_CHOICES = (
-        (MALE, 'male'),
-        (FEMALE, 'female')
+        (MALE, 'm'),
+        (FEMALE, 'f')
     )
 
     name = models.CharField(max_length=60, verbose_name='Name')
