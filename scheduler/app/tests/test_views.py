@@ -13,14 +13,14 @@ class PatientViewSetTestCase(APITransactionTestCase):
         self.patient_one = PatientFactory.create(
             name='Patient One',
             birthdate='1990-09-07',
-            sex='M',
+            sex=Patient.MALE,
             phone='16998882809',
             email='test1@email.com'
         )
         self.patient_two = PatientFactory.create(
             name='Patient Two',
             birthdate='2017-12-10',
-            sex='F',
+            sex=Patient.FEMALE,
             phone='16982129227',
             email='test2@email.com'
         )
@@ -30,7 +30,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         payload = {
             'name': 'Patient Test',
             'birthdate': date.today(),
-            'sex': 'F',
+            'sex': Patient.FEMALE,
             'phone': '16998882809',
             'email': 'test@email.com'
         }
@@ -46,7 +46,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
                 'id': self.patient_one.id,
                 'name': 'Patient One',
                 'birthdate': '1990-09-07',
-                'sex': 'M',
+                'sex': Patient.MALE,
                 'phone': '16998882809',
                 'email': 'test1@email.com'
             },
@@ -54,7 +54,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
                 'id': self.patient_two.id,
                 'name': 'Patient Two',
                 'birthdate': '2017-12-10',
-                'sex': 'F',
+                'sex': Patient.FEMALE,
                 'phone': '16982129227',
                 'email': 'test2@email.com'
             }
@@ -66,7 +66,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         patient = PatientFactory.create(
             name='Patient Three',
             birthdate='1990-10-15',
-            sex='M',
+            sex=Patient.MALE,
             phone='16998882809',
             email='test3@email.com'
         )
@@ -77,7 +77,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
             'id': patient.id,
             'name': 'Patient Three',
             'birthdate': '1990-10-15',
-            'sex': 'M',
+            'sex': Patient.MALE,
             'phone': '16998882809',
             'email': 'test3@email.com'
         })
@@ -90,7 +90,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         payload = {
             'name': 'Test Patient Update',
             'birthdate': date.today(),
-            'sex': 'M',
+            'sex': Patient.MALE,
             'phone': '(16)90288-2309',
             'email': 'test_patient@gmail.com'
         }
@@ -104,7 +104,7 @@ class PatientViewSetTestCase(APITransactionTestCase):
         payload = {
             'name': 'Patient Four',
             'birthdate': date.today(),
-            'sex': 'F',
+            'sex': Patient.FEMALE,
             'phone': '16902882309',
             'email': 'test4@gmail.com'
         }
@@ -168,7 +168,7 @@ class ProcedureViewSetTestCase(APITransactionTestCase):
 
     def test_procedure_partial_update(self):
         payload = {
-            'description': 'Consulta',
+            'description': 'Full Exam',
             'cost': '500.00'
         }
         response = self.client.patch('/procedures/2/', payload)
@@ -176,7 +176,7 @@ class ProcedureViewSetTestCase(APITransactionTestCase):
 
     def test_procedure_update(self):
         payload = {
-            'description': 'Tratamento avançado',
+            'description': 'Advanced Exam',
             'cost': '1200.00'
         }
         response = self.client.put('/procedures/2/', payload)
@@ -193,23 +193,23 @@ class AppointmentViewSetTestCase(APITransactionTestCase):
         self.patient_one = PatientFactory.create(
             name='Vinicius Chan',
             birthdate='1995-12-09',
-            sex='M',
+            sex=Patient.MALE,
             phone='16998882809',
             email='test2@gmail.com'
         )
         self.patient_two = PatientFactory.create(
             name='Jane Doe',
             birthdate='1995-12-07',
-            sex='F',
+            sex=Patient.FEMALE,
             phone='169988782809',
             email='test3@gmail.com'
         )
         self.procedure_one = ProcedureFactory.create(
-            description='Exame 1',
+            description='Exam 1',
             cost='100.00'
         )
         self.procedure_two = ProcedureFactory.create(
-            description='Exame 4',
+            description='Exam 4',
             cost='200.00'
         )
         self.appointment_one = AppointmentFactory.create(

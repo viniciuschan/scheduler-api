@@ -14,7 +14,7 @@ class PatientFactory(DjangoModelFactory):
 
     name = 'Testing'
     birthdate = date.today() - timedelta(days=30*12*25)
-    sex = 'Male'
+    sex = Patient.MALE
     phone = '(16)98121-1201'
     email = 'testing@email.com'
 
