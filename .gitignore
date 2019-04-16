@@ -102,3 +102,6 @@ ENV/
 
 # DB
 *.sqlite3
+
+# text editor
+*.vscode

@@ -22,31 +22,34 @@ class Patient(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Paciente'
+        verbose_name = 'Patient'
+        verbose_name_plural = 'Patients'
 
 class Procedure(models.Model):
-    """ Representative class for the procedures """
+    """ Representative class for the procedures. """
 
-    description = models.CharField(max_length=100, verbose_name='Procedimento')
-    cost = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Valor')
+    description = models.CharField(max_length=100, verbose_name='Procedure')
+    cost = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Price')
 
     def __str__(self):
         return self.description
 
     class Meta:
-        verbose_name = 'Procedimento'
+        verbose_name = 'Proocedure'
+        verbose_name_plural = 'Procedures'
 
 class Appointment(models.Model):
-    """ Representative class for the appointments """
+    """ Representative class for the appointments. """
 
-    patient = models.ForeignKey("Patient", related_name="patient")
-    procedure = models.ForeignKey("Procedure", related_name="procedure")
+    patient = models.ForeignKey('Patient', related_name='patient')
+    procedure = models.ForeignKey('Procedure', related_name='procedure')
     date = models.DateField()
     start_at = models.TimeField(null=False)
     end_at = models.TimeField()
 
     def __str__(self):
-        return "{} - {}, dia {} às {} horas".format(self.patient.name, self.procedure.description, self.date, self.start_at)
+        return '{} - {}, on {} at {} hours'.format(self.patient.name, self.procedure.description, self.date, self.start_at)
 
     class Meta:
-        verbose_name = 'Agendamento'
+        verbose_name = 'Appointment'
+        verbose_name_plural = 'Appointments'
