@@ -6,6 +6,9 @@ python:
 services:
   - docker
 
+before_install:
+  - cd scheduler
+
 before_script: pip install docker-compose
 
-script: docker-compose run scheduler-api su -c "python scheduler/manage.py test"
+script: docker-compose run scheduler-api su -c "python manage.py test"
