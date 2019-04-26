@@ -8,4 +8,4 @@ services:
 
 before_script: pip install docker-compose
 
-script: docker-compose run exec scheduler-api su -c "python scheduler/manage.py createsuperuser"
+script: docker-compose run exec scheduler-api su -c "python scheduler/manage.py test"
