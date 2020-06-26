@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-
 from django.db import models
+
 
 class Patient(models.Model):
     """ Representative class for patients. """
@@ -19,11 +18,16 @@ class Patient(models.Model):
     email = models.EmailField(verbose_name='E-mail')
 
     def __str__(self):
-        return self.name
+        return '<{} ID: {}> Name: {}'.format(
+            self.__class__.__name__,
+            self.pk,
+            self.name
+        )
 
     class Meta:
         verbose_name = 'Patient'
         verbose_name_plural = 'Patients'
+
 
 class Procedure(models.Model):
     """ Representative class for the procedures. """
@@ -32,11 +36,16 @@ class Procedure(models.Model):
     cost = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Price')
 
     def __str__(self):
-        return self.description
+        return '<{} ID: {}> Description: {}'.format(
+            self.__class__.__name__,
+            self.pk,
+            self.description
+        )
 
     class Meta:
         verbose_name = 'Proocedure'
         verbose_name_plural = 'Procedures'
+
 
 class Appointment(models.Model):
     """ Representative class for the appointments. """
@@ -48,7 +57,12 @@ class Appointment(models.Model):
     end_at = models.TimeField()
 
     def __str__(self):
-        return '{} - {}, on {} at {} hours'.format(self.patient.name, self.procedure.description, self.date, self.start_at)
+        return '<{} ID: {}> Scheduled on {} - {} hours'.format(
+            self.__class__.__name__,
+            self.pk,
+            self.date,
+            self.start_at
+        )
 
     class Meta:
         verbose_name = 'Appointment'

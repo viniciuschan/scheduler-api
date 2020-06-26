@@ -4,7 +4,9 @@ from django.contrib import admin
 from rest_framework import routers
 
 from app.views import (
-    AppointmentViewSet, PatientViewSet, ProcedureViewSet
+    AppointmentViewSet,
+    PatientViewSet,
+    ProcedureViewSet,
 )
 
 

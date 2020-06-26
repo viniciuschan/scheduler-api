@@ -1,7 +1,11 @@
 from rest_framework import viewsets
 
 from .models import Appointment, Patient, Procedure
-from .serializers import AppointmentSerializer, PatientSerializer, ProcedureSerializer
+from .serializers import (
+    AppointmentSerializer,
+    PatientSerializer,
+    ProcedureSerializer,
+)
 
 
 class AppointmentViewSet(viewsets.ModelViewSet):
