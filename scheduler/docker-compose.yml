@@ -1,4 +1,4 @@
-version: '3'
+version: '2.1'
 
 services:
   scheduler-api:
@@ -7,7 +7,8 @@ services:
     ports:
        - "8000:8000"
     depends_on:
-       - db
+       db:
+        condition: service_healthy
     links:
       - db
     volumes:
@@ -23,6 +24,11 @@ services:
       - MYSQL_DATABASE=api
     volumes:
       - database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   database:

@@ -9,4 +9,5 @@ COPY . /scheduler/
 
 WORKDIR /scheduler/
 
-RUN cd /scheduler && pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt

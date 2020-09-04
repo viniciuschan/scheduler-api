@@ -1,7 +1,12 @@
-# API REST that represents a scheduling system
+[![Build Status](https://travis-ci.org/viniciuschan/scheduler-api.svg?branch=master)](https://travis-ci.org/viniciuschan/scheduler-api)
 
-Author: Vinícius Chan
 
+
+Scheduler API
+=============
+
+##### API REST that represents a scheduling system
+###### Author: Vinícius Chan
 
 ## Requirements
 
